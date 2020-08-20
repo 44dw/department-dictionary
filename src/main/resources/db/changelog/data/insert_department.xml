@@ -1,0 +1,27 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd"
+                   logicalFilePath="src/main/resources/db/changelog/database_changelog.xml">
+
+    <changeSet id="insert_department" author="Dmitrii_Akhmetshin">
+        <preConditions>
+            <tableExists tableName="department"/>
+        </preConditions>
+        <loadUpdateData
+                tableName="department"
+                primaryKey="id"
+                file="/data/department.csv"/>
+<!--                file="src/main/resources/data/department.csv"/>-->
+    </changeSet>
+
+    <changeSet id="alter_department_id_seq" author="Dmitrii_Akhmetshin">
+        <preConditions onFail="HALT">
+            <sequenceExists sequenceName="department_id_seq"/>
+        </preConditions>
+        <sql>
+            SELECT SETVAL('department_id_seq', MAX(id)) FROM department;
+        </sql>
+    </changeSet>
+</databaseChangeLog>

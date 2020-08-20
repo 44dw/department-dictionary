@@ -1,0 +1,49 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="create_department" author="Dmitrii_Akhmetshin">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="department"/>
+            </not>
+        </preConditions>
+        <createTable tableName="department">
+            <column name="id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="date" type="date">
+                <constraints nullable="false" />
+            </column>
+            <column name="root_department_id" type="INT"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="add_department_pk" author="Dmitrii_Akhmetshin">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="department"/>
+            <not>
+                <primaryKeyExists primaryKeyName="department_pk" tableName="department"/>
+            </not>
+        </preConditions>
+        <addPrimaryKey constraintName="department_pk"
+                       tableName="department"
+                       columnNames="id"/>
+    </changeSet>
+
+    <changeSet id="create_department_seq" author="Dmitrii_Akhmetshin">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="department"/>
+            <not>
+                <sequenceExists sequenceName="department_id_seq"/>
+            </not>
+        </preConditions>
+        <createSequence sequenceName="department_id_seq" incrementBy="1" startValue="1"/>
+    </changeSet>
+
+</databaseChangeLog>

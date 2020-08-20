@@ -1,0 +1,3 @@
+id,name,date,root_department_id
+1,test,2010-05-12,null
+2,another,2012-01-05,1

@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: department-dictionary
+
+# Database config
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/department?currentSchema=public
+    username: postgres
+    password: postgres
+    jpa:
+      database-platform: org.hibernate.dialect.PostgreSQL94Dialect
+
+# Liquibase config
+  liquibase:
+    change-log: classpath:common_changelog.xml
+#    enabled: false
+
+# Eureka config
+server:
+  port: 8081
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+  instance:
+    preferIpAddress: true
+
+
