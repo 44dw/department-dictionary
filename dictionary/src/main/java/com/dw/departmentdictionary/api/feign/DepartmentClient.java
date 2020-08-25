@@ -3,6 +3,7 @@ package com.dw.departmentdictionary.api.feign;
 import com.dw.departmentdictionary.dto.DepartmentDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -10,4 +11,7 @@ import java.util.List;
 public interface DepartmentClient {
     @GetMapping
     List<DepartmentDto> getAll();
+
+    @GetMapping("/{id}")
+    DepartmentDto getById(@PathVariable("id") Integer id);
 }

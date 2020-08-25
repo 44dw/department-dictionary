@@ -33,7 +33,13 @@ public abstract class AbstractCommonResource<T> implements CommonResource<T> {
     @Override
     @PutMapping("/{id}")
     public T update(@PathVariable Integer id, @RequestBody T entity) {
-        return this.service.update(id, entity);
+        try {
+            this.service.getOneById(id);
+            return this.service.update(entity);
+        } catch (Exception e) {
+            System.out.println("Entity not found!");
+        }
+        return null;
     }
 
     @Override

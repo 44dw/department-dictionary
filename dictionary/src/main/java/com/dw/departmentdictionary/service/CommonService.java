@@ -6,6 +6,6 @@ public interface CommonService<T> {
     List<T> getAll();
     T getOneById(Integer id);
     T save(T entity);
-    T update(Integer id, T entity);
+    T update(T entity);
     void deleteById(Integer id);
 }
