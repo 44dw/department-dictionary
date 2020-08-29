@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class AbstractCommonService<Domain, Dto> implements CommonService<Dto>, Mappable<Domain, Dto> {
@@ -37,6 +36,7 @@ public class AbstractCommonService<Domain, Dto> implements CommonService<Dto>, M
 
     @Override
     public Dto save(Dto dto) {
+        this.validate(dto);
         return this.mapToDto(this.repository.save(this.mapToDomain(dto)));
     }
 
@@ -58,5 +58,9 @@ public class AbstractCommonService<Domain, Dto> implements CommonService<Dto>, M
     @Override
     public Dto mapToDto(Domain domain) {
         return this.mapper.mapToDto(domain);
+    }
+
+    protected void validate(Dto dto) {
+
     }
 }

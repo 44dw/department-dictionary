@@ -82,7 +82,17 @@
 				<version>1.18.12</version>
 				<optional>true</optional>
 			</dependency>
-<!--			<dependency>-->
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-validator</artifactId>
+				<version>6.1.5.Final</version>
+			</dependency>
+			<dependency>
+				<groupId>com.dw</groupId>
+				<artifactId>employee-department-server-api</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			<!--			<dependency>-->
 <!--				<groupId>org.postgresql</groupId>-->
 <!--				<artifactId>postgresql</artifactId>-->
 <!--				<version>42.2.14</version>-->
