@@ -3,14 +3,17 @@ package com.dw.departmentdictionary.service;
 import com.dw.departmentdictionary.mapper.CommonMapper;
 import com.dw.departmentdictionary.mapper.Mappable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class AbstractCommonService<Domain, Dto> implements CommonService<Dto>, Mappable<Domain, Dto> {
-    private JpaRepository<Domain, Integer> repository;
-    private CommonMapper<Domain, Dto> mapper;
+    protected JpaRepository<Domain, Integer> repository;
+    protected CommonMapper<Domain, Dto> mapper;
 
     @Autowired
     public AbstractCommonService(JpaRepository<Domain, Integer> repository, CommonMapper<Domain, Dto> mapper) {
@@ -27,6 +30,13 @@ public class AbstractCommonService<Domain, Dto> implements CommonService<Dto>, M
 
     }
 
+    public List<Dto> getAllWithSpec(Specification<Domain> specification) {
+        List<Domain> domains = ((JpaSpecificationExecutor<Domain>) repository).findAll(specification);
+        return domains.stream()
+                .map(this::mapToDto)
+                .collect(Collectors.toList());
+    }
+
     @Override
     public Dto getOneById(Integer id) {
         Domain domain = this.repository.findById(id).orElseThrow(()
@@ -36,7 +46,7 @@ public class AbstractCommonService<Domain, Dto> implements CommonService<Dto>, M
 
     @Override
     public Dto save(Dto dto) {
-        this.validate(dto);
+        this.validateCreation(dto);
         return this.mapToDto(this.repository.save(this.mapToDomain(dto)));
     }
 
@@ -47,7 +57,11 @@ public class AbstractCommonService<Domain, Dto> implements CommonService<Dto>, M
 
     @Override
     public void deleteById(Integer id) {
-        this.repository.deleteById(id);
+        Optional<Domain> domainOptional = this.repository.findById(id);
+        if (domainOptional.isPresent()) {
+            this.validateDeletion(this.mapToDto(domainOptional.get()));
+            this.repository.deleteById(id);
+        }
     }
 
     @Override
@@ -60,7 +74,11 @@ public class AbstractCommonService<Domain, Dto> implements CommonService<Dto>, M
         return this.mapper.mapToDto(domain);
     }
 
-    protected void validate(Dto dto) {
+    protected void validateCreation(Dto dto) {
+
+    }
+
+    protected void validateDeletion(Dto dto) {
 
     }
 }

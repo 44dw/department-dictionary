@@ -7,9 +7,9 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.dw")
 @EnableEurekaClient
-@EnableFeignClients
+@EnableFeignClients(basePackages = {"com.dw.departmentdictionary.api.feign", "com.dw.employeedepartmentserver.api.feign"})
 @EnableJpaRepositories(considerNestedRepositories = true)
 @EntityScan(basePackages = "com.dw.departmentdictionary.domain")
 public class DepartmentDictionaryApplication {

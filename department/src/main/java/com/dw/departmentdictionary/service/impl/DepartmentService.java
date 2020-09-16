@@ -19,7 +19,12 @@ public class DepartmentService extends AbstractCommonService<Department, Departm
     }
 
     @Override
-    protected void validate(DepartmentDto departmentDto) {
-        this.departmentValidator.validate(departmentDto);
+    protected void validateCreation(DepartmentDto departmentDto) {
+        this.departmentValidator.validateCreation(departmentDto);
+    }
+
+    @Override
+    protected void validateDeletion(DepartmentDto departmentDto) {
+        super.validateDeletion(departmentDto);
     }
 }

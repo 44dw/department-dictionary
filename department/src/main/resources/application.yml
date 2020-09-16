@@ -19,6 +19,7 @@ spring:
 # Eureka config
 server:
   port: 8081
+
 eureka:
   client:
     serviceUrl:
